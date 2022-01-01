@@ -1,0 +1,23 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>All Posts</title>
+    </head>
+    <body>
+        <h1>All Posts</h1>
+        {% for post in posts %}
+        <h2>{{post.title}}</h2>
+        <h4>{{post.author}}</h4>
+        <p>{{post.body}}</p>
+        <small>Likes: {{post.likes}}   Dislikes: {{post.dislikes}}</small> <br>
+        <p>{% endfor %}
+        {% if posts.has_previous %}
+        <a href="{% url 'allPosts'%}?page={{posts.previous_page_number}}">Previous Page</a>
+        {% endif %}
+        {% if posts.has_next %}
+        <a href="{% url 'allPosts'%}?page={{posts.next_page_number}}">Next Page</a>
+        {% endif %}
+    </p>
+    </body>
+</html>

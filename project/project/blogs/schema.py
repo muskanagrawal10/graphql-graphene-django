@@ -1,10 +1,11 @@
 import graphene
+from graphene import relay
 from graphene_django import DjangoObjectType
 from .models import Blog
-
 class BlogType(DjangoObjectType):
     class Meta:
         model = Blog
+        interfaces =(relay.Node,)
         fields = (
             'id',
             'author',
@@ -14,11 +15,21 @@ class BlogType(DjangoObjectType):
             'dislikes',
             'date_created',
         )
+class BlogConnection(relay.Connection):
+    class Meta:
+        node = BlogType
 
 class Query(graphene.ObjectType):
     blogs = graphene.List(BlogType)
+    # blogsPag = graphene.DjangoPaginationConnectionField(BlogType)
     blogById = graphene.Field(BlogType, blog_id = graphene.Int())
     blogsCount = graphene.Int()
+    blogsPag = relay.ConnectionField(BlogConnection)
+
+
+    
+    def resolve_blogsPag(root, info, **kwargs):
+        return Blog.objects.all()
 
     def resolve_blogs(root, info, **kwargs):
         return Blog.objects.all()

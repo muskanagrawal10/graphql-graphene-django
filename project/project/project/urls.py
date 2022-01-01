@@ -27,5 +27,5 @@ from blogs import views
 urlpatterns = [
     url('admin/', admin.site.urls),
     url("graphql", GraphQLView.as_view(graphiql=True, schema=schema)),
-    url('', views.post_list, name='home')
+    url('/', views.post_list, name='allPosts')
 ]
