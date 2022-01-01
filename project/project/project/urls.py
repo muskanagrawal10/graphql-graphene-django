@@ -15,11 +15,17 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-# from django.urls import path
 from graphene_django.views import GraphQLView
 from blogs.schema import schema
+from blogs import views
+# urlpatterns = [
+#     url(r'^admin/', admin.site.urls),
+#     url(r'^graphql/', GraphQLView.as_view(graphiql=True, schema=schema)),
+# ]
+
 
 urlpatterns = [
     url('admin/', admin.site.urls),
     url("graphql", GraphQLView.as_view(graphiql=True, schema=schema)),
+    # url('', views.post_list, name='home')
 ]

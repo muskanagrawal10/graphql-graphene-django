@@ -17,9 +17,17 @@ class BlogType(DjangoObjectType):
 
 class Query(graphene.ObjectType):
     blogs = graphene.List(BlogType)
+    blogById = graphene.Field(BlogType, blog_id = graphene.Int())
+    blogsCount = graphene.Int()
 
     def resolve_blogs(root, info, **kwargs):
         return Blog.objects.all()
+ 
+    def resolve_blogById(self, info, blog_id):
+        return Blog.objects.get(pk=blog_id)
+
+    def resolve_blogsCount(self, info, **kwargs):
+        return Blog.objects.count()
 
 schema= graphene.Schema(query = Query)
 
